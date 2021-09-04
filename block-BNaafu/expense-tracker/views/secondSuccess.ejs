@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="flex justify_between header_new">
+    <h2>Expense Tracker</h2>
+    <nav>
+      <ul class="flex">
+        <a href="/success/">
+          <li>CURRENT MONTH DATA</li>
+        </a>
+        <a href="/category/">
+          <li>ALL DATA</li>
+        </a>
+
+        <div class="username flex">
+          <h4>Sohail</h4>
+        </div>
+
+        <a class="logout" href="/logout"> Logout </a>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="flex-main container bg_new">
+      <aside class="box_shadow bg_new">
+        <article class="incomeData">
+          <form action="/dashboard/income/" method="POST">
+            <legend>Add Income data</legend>
+            <input type="text" name="source" placeholder="Enter source" />
+            <input type="number" name="incomeAmount" placeholder="Enter amount" />
+            <input type="date" name="incomeDate" />
+            <input type="submit" name="submit" value="add" />
+          </form>
+        </article>
+        <article>
+          <form action="/dashboard/expense" method="POST">
+            <legend>Add expense data</legend>
+            <input type="number" name="expenseAmount" placeholder="Enter amount" />
+            <input type="text" name="category" placeholder="Enter category" />
+            <input type="date" name="expenseDate" />
+            <input type="submit" name="submit" value="add" />
+          </form>
+        </article>
+        <article>
+          <form action="/category/dateSort" , method="POST">
+            <legend>Date Sort</legend>
+            <input name="start_date" placeholder="start_date" type="date" />
+            <input name="end_date" placeholder="end_date" type="date" />
+            <input type="submit" name="submit" value="search" />
+          </form>
+        </article>
+        <article>
+          <form action="/category/bothSort" method="POST">
+            <legend>Date & category Sort</legend>
+            <input name="start_date" placeholder="start_date" type="date" />
+            <input name="end_date" placeholder="end_date" type="date" />
+            <select name="category" id="category">
+              <%allCategories.forEach(event=>{%>
+                <option value="<%= event%>">
+                  <%= event%>
+                </option>
+                <%})%>
+            </select>
+            <input type="submit" name="submit" value="search" />
+          </form>
+        </article>
+        <article>
+          <form action="/dashboard/date" method="POST">
+            <legend>Month</legend>
+            <input type="month" name="month" class="p-2 bg-gray-200 my-1 rounded-lg border-2 border-gray-300" />
+            <input type="submit" name="submit" value="search" />
+          </form>
+        </article>
+      </aside>
+
+      <div class="display box_shadow">
+        <section class="allcategories flex flex_wrap">
+          <%allCategories.forEach((category)=>{%>
+            <a href="/category/?name=<%=category%>">
+              <%= category%>
+            </a>
+            <%})%>
+        </section>
+
+        <section class="results">
+          <%if(income||expense){%>
+            <%income.forEach((income)=>{%>
+              <article class="green">
+                <h3>Source: <%= income.source%>
+                </h3>
+                <p>Income Amount: <%= income.incomeAmount%>
+                </p>
+                <p>Income Date: <%= newIncomeDate%>
+                </p>
+                <div class="edit_delete">
+                  <a class="edit edit_new" href="">Edit</a>
+                  <a class="delete delete_new" href="">Delete</a>
+                </div>
+              </article>
+
+              <%})%>
+                <%expense.forEach((expense)=>{%>
+                  <article class="red">
+                    <h3>Category: <%= expense.category%>
+                    </h3>
+                    <p>Expense Amount: <%= expense.expenseAmount%>
+                    </p>
+                    <p>Expense Date: <%= newExpenseDate%>
+                    </p>
+                    <div class="edit_delete">
+                      <a class="edit edit_new" href="">Edit</a>
+                      <a class="delete delete_new" href="">Delete</a>
+                    </div>
+                  </article>
+                  <%})%>
+                    <%}%>
+                      <div class="">
+                        <h2 class="savings">
+                          Savings for Current Results : <%= addIncome%>-<%= addExpense%> =
+                              <%= totalSavings%>
+                        </h2>
+                      </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Sohail Application &copy; All rights reserved</span>
+  </footer>
+</body>
+
+</html>
