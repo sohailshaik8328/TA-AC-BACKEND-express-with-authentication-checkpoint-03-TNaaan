@@ -5,6 +5,9 @@ module.exports = {
       !(
         (req.session.passport && req.session.passport.user) ||
         req.session.userId
+
+
+        
       )
     ) {
       return res.redirect('/users/register');
