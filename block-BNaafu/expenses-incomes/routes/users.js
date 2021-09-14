@@ -36,15 +36,8 @@ router.get('/register/new', (req,res,next) => {
   res.render('register.ejs', {error, info})
 })
 
-// router.get('/', (req, res, next) => {
-//   User.find({}, (err, users) => {
-//     if(err) return next(err);
-//     res.render('users', { users });
-//     });
-// });
 
 router.post('/register/new', upload.single('photo'),(req,res,next) => {
-  // console.log(req.body)
   if(req.file){
     let formatName = req.file.filename.split(".").pop();
     let imageFormats = ['jpg', 'jpeg', 'png', 'gif'];
@@ -82,7 +75,7 @@ router.post('/register/new', upload.single('photo'),(req,res,next) => {
           
         })
 
-        var mailOptions = { from: 'kousarbhanubhanu@gmail.com', 
+        var mailOptions = { from: 'sohailshaik765@gmail.com', 
                           to: user.email, 
                           subject: 'Account Verification Link', 
                           text: 'Hello '+ req.body.name +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
@@ -195,7 +188,7 @@ router.post('/login/forgotpassword', (req, res, next) => {
     });
     
     const mailOptions = {
-      from: 'kousarbhanubhanu@gmail.com',
+      from: 'sohailshaik765@gmail.com',
       to: email,
       subject: 'Verification Email',
       html: `<h1>${req.body.random}</h1>
