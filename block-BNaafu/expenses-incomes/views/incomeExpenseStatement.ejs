@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+    <main class="w-full h-screen flex justify-center items-center">
+        <div class="w-10/12 m-auto shadow-2xl">
+            <div>
+                <h2 class="text-4xl text-black font-bold text-center mt-8">Savings : <span class="text-green-600">
+                        <%= savings %>
+                    </span></h2>
+            </div>
+            <section class=" ">
+                <div class="flex my-8  w-full items-center">
+                    <div class="w-full  flex justify-around">
+                        <form action="/client/statementList/filterByDate" method="GET"
+                            class="flex flex-col p-12 border-2 border-gray-300 rounded-lg mb-10 bg-white">
+                            <h2 class="my-1 text-xl font-bold">Filter By Date</h2>
+                            <input type="date" name="startDate"
+                                class="p-2  my-1 rounded-lg border-2 mt-3 border-gray-300">
+                            <input type="date" name="endDate"
+                                class="p-2  my-1 rounded-lg border-2 mt-3 border-gray-300">
+                            <input type="submit" value="Search"
+                                class="p-2 bg-black text-white font-bold my-1 mt-3 rounded-lg ">
+                        </form>
+
+                        <form action="/client/statementList/filterByMonth" method="get"
+                            class="flex flex-col p-8 border-2 border-gray-300 rounded-lg mb-10 bg-white">
+                            <h2 class="my-1 text-xl font-bold">Filter By Month</h2>
+                            <input type="month" name="month" class="p-2  my-1 rounded-lg border-2 border-gray-300">
+                            <input type="submit" value="search"
+                                class="p-2 bg-black text-white font-bold my-1 rounded-lg ">
+                        </form>
+
+                        <div class="text-center p-4 flex  justify-center items-center ml-6">
+                            <div class="flex items-center h-2/6 ">
+                                <a href="/client/expense/new"
+                                    class="mx-2 bg-red-500 h-10 text-white font-bold p-2 px-4  transition:all text-xl rounded-lg hover:bg-gray-400 block">Add
+                                    Expenses</a>
+                                <a href="/client/income/new"
+                                    class="mx-2 bg-green-500 h-10 text-white font-bold p-2 px-4  transition:all text-xl rounded-lg hover:bg-gray-400 block">Add
+                                    Incomes</a>
+                                <a href="/client/statementList"
+                                    class="bg-red-500 hover:bg-red-700 h-10 text-white font-bold  p-2  rounded-lg text-xl block">Reset
+                                    Filters</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <section class="my-8 flex flex-wrap justify-between">
+                    <% incomes.forEach(i=> { %>
+                        <div
+                            class="bg-green-400 p-8 my-3  rounded-lg flex justify-between items-center  m-4 text-xl w-3/12">
+                            <h2 class="font-bold mr-5">
+                                <%= i.incname %>
+                            </h2>
+                            <h2 class="font-bold mr-5">
+                                <%= i.amount %>
+                            </h2>
+                            <a href="/income/<%= i.id %>"
+                                class="px-2 py-1 bg-black text-white text:sm hover:bg-gray-600 rounded-lg">Show
+                                Details</a>
+                        </div>
+
+                        <% }) %>
+                            <% expenses.forEach(i=> { %>
+                                <div
+                                    class="bg-red-600 text-white p-8 my-3  m-4 rounded-lg flex justify-between text-xl w-3/12">
+                                    <h2 class="font-bold">
+                                        <%= i.expname %>
+                                    </h2>
+                                    <h2 class="font-bold">
+                                        <%= i.amount %>
+                                    </h2>
+                                    <a href="/expense/<%= i.id %>"
+                                        class="px-2 py-1 bg-black  text-white text:sm  hover:bg-gray-600 rounded-lg">Show
+                                        Details</a>
+                                </div>
+
+                                <% }) %>
+                                    <% if(balance) {%>
+                                        <h2 class="text-4xl text-white  font-bold text-center mt-8">Savings from the
+                                            Search results: <span class="text-green-500">
+                                                <%= balance %>
+                                            </span></h2>
+                                        <% } %>
+                                            <% if((expenses.length)===0 && (incomes.length===0)) { %>
+                                                <h1 class="text-center text-3xl font-bold">No Records Available</h1>
+                                                <% } %>
+                </section>
+            </section>
+        </div>
+    </main>
